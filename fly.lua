@@ -221,51 +221,7 @@ local Slider = AdamTab:CreateSlider({
    CurrentValue = 16,
    Flag = "Slider1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Value)
-    game.workspace.Character.Princessmaryam095.speedboost = (Value)
+    game.workspace.Princessmaryam095.Character.speedboost = (Value)
    end,
 })
-local AdamSection = AdamTab:CreateSection("Пен Дех Вал")
-
-Rayfield:Notify({
-   Title = "Notification Title",
-   Content = "Notification Content",
-   Duration = 6.5,
-   Image = 4483362458,
-})
-local Toggle = AdamTab:CreateToggle({
-    Name = "Pass Through Walls",
-    CurrentValue = false,
-    Flag = "Toggle1",
-    Callback = function(Value)
-        -- тут можно оставить пустым, т.к. мы будем отслеживать состояние чуть позже
-    end,
-})
-
-local UserInputService = game:GetService("UserInputService")
-local runService = game:GetService("RunService")
-local player = game.Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-
--- Создаем переменную для состояния "прохода сквозь стены"
-local noclip = false
-
--- Обработчик изменений переключателя
-Toggle:OnChanged(function()
-    noclip = Toggle.CurrentValue
-    if noclip then
-        print("Проход сквозь стены включен")
-    else
-        print("Проход сквозь стены выключен")
-    end
-end)
-
--- Постоянное обновление состояния столкновений
-runService.RenderStepped:Connect(function()
-    for _, part in ipairs(character:GetChildren()) do
-        if part:IsA("BasePart") then
-            part.CanCollide = not noclip
-        end
-    end
-end,
-})   
 
