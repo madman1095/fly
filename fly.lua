@@ -224,4 +224,40 @@ local Slider = AdamTab:CreateSlider({
     game.workspace.Character.Princessmaryam095.speedboost = (Value)
    end,
 })
+local Toggle = Tab:CreateToggle({
+    Name = "Pass Through Walls",
+    CurrentValue = false,
+    Flag = "Toggle1",
+    Callback = function(Value)
+        -- тут можно оставить пустым, т.к. мы будем отслеживать состояние чуть позже
+    end,
+})
+
+local UserInputService = game:GetService("UserInputService")
+local runService = game:GetService("RunService")
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+
+-- Создаем переменную для состояния "прохода сквозь стены"
+local noclip = false
+
+-- Обработчик изменений переключателя
+Toggle:OnChanged(function()
+    noclip = Toggle.CurrentValue
+    if noclip then
+        print("Проход сквозь стены включен")
+    else
+        print("Проход сквозь стены выключен")
+    end
+end)
+
+-- Постоянное обновление состояния столкновений
+runService.RenderStepped:Connect(function()
+    for _, part in ipairs(character:GetChildren()) do
+        if part:IsA("BasePart") then
+            part.CanCollide = not noclip
+        end
+    end
+end,
+})   
 
