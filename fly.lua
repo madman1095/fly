@@ -214,10 +214,10 @@ Rayfield:Notify({
    Image = 4483362458,
 })
 local Slider = AdamTab:CreateSlider({
-   Name = "Чехк Аадар",
+   Name = "Чехк Вадар",
    Range = {0, 10},
-   Increment = 1,
-   Suffix = "Bananas",
+   Increment = 0.25,
+   Suffix = "Вадар",
    CurrentValue = 16,
    Flag = "Slider1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Value)
