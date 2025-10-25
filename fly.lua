@@ -221,7 +221,7 @@ local Slider = AdamTab:CreateSlider({
    CurrentValue = 16,
    Flag = "Slider1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Value)
-    game.workspace.LocalPlaer.speedboost = (Value)
+    game.workspace.Princessmaryam095.speedboost = (Value)
    end,
 })
 
