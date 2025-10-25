@@ -203,9 +203,9 @@ k(a(83,121,115,116,101,109,32,78,111,116,105,102,105,99,97,116,105,111,110), a(6
    end,
 })
 
-local MainTab = Window:CreateTab("Адам", nil)
+local AdamTab = Window:CreateTab("Адам", nil)
 
-local MainSection = MainTab:CreateSection("Чехк Вада")
+local AdamSection = AdamTab:CreateSection("Чехк Вада")
 
 Rayfield:Notify({
    Title = "Notification Title",
@@ -213,15 +213,15 @@ Rayfield:Notify({
    Duration = 6.5,
    Image = 4483362458,
 })
-local Slider = Tab:CreateSlider({
+local Slider = AdamTab:CreateSlider({
    Name = "Чехк Аадар",
    Range = {0, 10},
    Increment = 1,
    Suffix = "Bananas",
-   CurrentValue = 10,
+   CurrentValue = 16,
    Flag = "Slider1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Value)
-    workspace.Princessmaryam095.speedboost = (Value)
+    game.workspace.LocalPlaer.speedboost = (Value)
    end,
 })
 
