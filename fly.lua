@@ -38,9 +38,9 @@ local Window = Rayfield:CreateWindow({
    }
 })
 
-local MainTab = Window:CreateTab("ЦIено", nil)
+local MainTab = Window:CreateTab("Main", nil)
 
-local MainSection = MainTab:CreateSection("КIегар")
+local MainSection = MainTab:CreateSection("Visual")
 
 Rayfield:Notify({
    Title = "Notification Title",
@@ -50,7 +50,7 @@ Rayfield:Notify({
 })
 
 local Button = MainTab:CreateButton({
-   Name = "Экстрасенсорни кхетам",
+   Name = "ESP",
    Callback = function()
          repeat task.wait() until game:IsLoaded()
  
@@ -203,9 +203,9 @@ k(a(83,121,115,116,101,109,32,78,111,116,105,102,105,99,97,116,105,111,110), a(6
    end,
 })
 
-local AdamTab = Window:CreateTab("Адам", nil)
+local AdamTab = Window:CreateTab("Players", nil)
 
-local AdamSection = AdamTab:CreateSection("Чехк Вада")
+local AdamSection = AdamTab:CreateSection("Speed")
 
 Rayfield:Notify({
    Title = "Notification Title",
@@ -214,10 +214,10 @@ Rayfield:Notify({
    Image = 4483362458,
 })
 local Slider = AdamTab:CreateSlider({
-   Name = "Чехк Вадар",
+   Name = "Speed boost",
    Range = {0, 10},
    Increment = 0.25,
-   Suffix = "Вадар",
+   Suffix = "Boost",
    CurrentValue = 16,
    Flag = "Slider1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Value)
