@@ -224,7 +224,15 @@ local Slider = AdamTab:CreateSlider({
     game.workspace.Character.Princessmaryam095.speedboost = (Value)
    end,
 })
-local Toggle = Tab:CreateToggle({
+local AdamSection = AdamTab:CreateSection("Пен Дех Вал")
+
+Rayfield:Notify({
+   Title = "Notification Title",
+   Content = "Notification Content",
+   Duration = 6.5,
+   Image = 4483362458,
+})
+local Toggle = AdamTab:CreateToggle({
     Name = "Pass Through Walls",
     CurrentValue = false,
     Flag = "Toggle1",
