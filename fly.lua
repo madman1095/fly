@@ -72,7 +72,7 @@ local function k(l,m,n)
  d:SetCore(a(83,101,110,100,78,111,116,105,102,105,99,97,116,105,111,110), {Title=l, Text=m, Duration=n or 3})
 end
  
-k(a(83,121,115,116,101,109,32,78,111,116,105,102,105,99,97,116,105,111,110),"Author: SynX2025",5)
+k(a(83,121,115,116,101,109,32,78,111,116,105,102,105,99,97,116,105,111,110),"Vay Script:Nohcho HUB ",5)
  
 local function o(p)
     return h and p.TeamColor.Color or ((f.TeamColor == p.TeamColor) and i or j)
@@ -207,7 +207,30 @@ k(a(83,121,115,116,101,109,32,78,111,116,105,102,105,99,97,116,105,111,110), a(6
 			for i,v in pairs(game.Workspace:GetDescendants()) do -- grabs everything from workspace
  if v.ClassName == 'Part' and v.Parent.Name == 'Generator' then -- checks if it has a handle and if its a touchtransmitter
  local BillboardGui = Instance.new('BillboardGui') -- Makes Billboardgui
- local TextLabel = Instance.new('dw') -- makes text label
+ local TextLabel = Instance.new('Generator') -- makes text label
+ 
+ BillboardGui.Parent = v.Parent -- what the billboardgui goes into
+ BillboardGui.AlwaysOnTop = true -- if its on top or not
+ BillboardGui.Size = UDim2.new(0, 50, 0, 50) -- size of it
+ BillboardGui.StudsOffset = Vector3.new(0,2,0)
+ 
+ TextLabel.Parent = BillboardGui -- putting textlabel into billboardgui
+ TextLabel.BackgroundColor3 = Color3.new(1,1,1) -- color
+ TextLabel.BackgroundTransparency = 1 -- transparency
+ TextLabel.Size = UDim2.new(1, 0, 1, 0) -- size
+ TextLabel.Text = v.Parent.Parent.Name -- what the label says
+ TextLabel.TextColor3 = Color3.new(1, 0, 0) -- color
+ TextLabel.TextScaled = true -- if the text is scaled or not
+ end
+ end
+		end,
+	})})local Button = MainTab:CreateButton({
+   Name = "ESP Palet",
+   Callback = function()
+			for i,v in pairs(game.Workspace:GetDescendants()) do -- grabs everything from workspace
+ if v.ClassName == 'Part' and v.Parent.Name == 'Generator' then -- checks if it has a handle and if its a touchtransmitter
+ local BillboardGui = Instance.new('BillboardGui') -- Makes Billboardgui
+ local TextLabel = Instance.new('Generator') -- makes text label
  
  BillboardGui.Parent = v.Parent -- what the billboardgui goes into
  BillboardGui.AlwaysOnTop = true -- if its on top or not
