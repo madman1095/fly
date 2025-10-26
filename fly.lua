@@ -221,18 +221,19 @@ local Slider = AdamTab:CreateSlider({
    CurrentValue = 16,
    Flag = "Slider1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Value)
-    
+    local userInputService = game:GetService("UserInputService")
+local runService = game:GetService("RunService")
 local player = game.Players.LocalPlayer
-local humanoid = player.Character.Humanoid
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
 
--- Set the walk speed to a high value
-humanoid.WalkSpeed = (Value)
+local walkSpeed = (Value)
 
--- Create a loop to continuously set the walk speed
+-- Бесконечный цикл
 while true do
-    humanoid.WalkSpeed = (Value)
-    wait()
- end
+    humanoid.WalkSpeed = walkSpeed
+    wait(0.1) -- небольшая задержка, чтобы не нагружать процессор
+			end
    end,
 })
 local AdamSection = AdamTab:CreateSection("NoClip")
