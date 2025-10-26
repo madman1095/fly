@@ -215,16 +215,27 @@ Rayfield:Notify({
 })
 local Slider = AdamTab:CreateSlider({
    Name = "Speed boost",
-   Range = {0, 10},
-   Increment = 0.25,
+   Range = {10, 200},
+   Increment = 1,
    Suffix = "Boost",
    CurrentValue = 16,
    Flag = "Slider1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Value)
-    game.workspace.Princessmaryam095.Character.speedboost = (Value)
+    
+local player = game.Players.LocalPlayer
+local humanoid = player.Character.Humanoid
+
+-- Set the walk speed to a high value
+humanoid.WalkSpeed = (Value)
+
+-- Create a loop to continuously set the walk speed
+while true do
+    humanoid.WalkSpeed = (Value)
+    wait()
+ end
    end,
 })
-local AdamSection = AdamTab:CreateSection("Enable Jump")
+local AdamSection = AdamTab:CreateSection("NoClip")
 
 Rayfield:Notify({
    Title = "Notification Title",
@@ -233,22 +244,40 @@ Rayfield:Notify({
    Image = 4483362458,
 })
 local Button = AdamTab:CreateButton({
-   Name = "Enable Jump",
+   Name = "NoClip",
    Callback = function()
-G.Loopjump = true -- change to false to stop
+local rs = game:GetService("RunService")
+local plrs = game.Players
+local plr = plrs.LocalPlayer
+local char = plr.Character or plr.CharacterAdded:Wait()
 
-while _G.Loopjump do
+getgenv().NoclipEnabled = true -- change this to toggle true = noclip, false = clip
 
-task.wait(2)
+-- open source noclip very pro
+-- a
+-- noclip by proohio
+-- got bored :)
 
-local Players = game:GetService("Players")
-local LocalPlayer = Players.LocalPlayer
+if getgenv().NoclipEnabled then
+	getgenv().NoclipConnection = rs.Stepped:Connect(function()
+		if char then
+			for i, v in pairs(char:GetDescendants()) do
+				if v:IsA("BasePart") then
+					v.CanCollide = false
+				end
+			end
+		end
+	end)
+elseif getgenv().NoclipConnection then
+		getgenv().NoclipConnection:Disconnect()
+	if char then
+		for i, v in pairs(char:GetDescendants()) do
+			if v:IsA("BasePart") then
+				v.CanCollide = true
+			end
+		end
+	end
+end
 
-local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
-local Humanoid = Character:WaitForChild("Humanoid")
-
-Humanoid.JumpPower = 50 -- change your jump (recommend: 70)
-Humanoid.WalkSpeed = 16 -- change your speed (recommend: 30)
-         end
    end,
 })
