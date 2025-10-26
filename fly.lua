@@ -282,7 +282,7 @@ end
 
    end,
 })
-local AdamSection = AdamTab:CreateSection("Enable Jump")
+local AdamSection = AdamTab:CreateSection("Jump")
 
 Rayfield:Notify({
    Title = "Notification Title",
@@ -290,183 +290,72 @@ Rayfield:Notify({
    Duration = 6.5,
    Image = 4483362458,
 })
-local Button = Tab:CreateButton({
-   Name = "Button Example",
+local Button = AdamTab:CreateButton({
+   Name = "Enable Jump",
    Callback = function()
- Hey! This jump controller has, Infinite jump, Auto jump, and Change jump power! With a closeable and minimizable UI!
-print ("Jump controller loaded in!")
+   local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+local LocalPlayer = Players.LocalPlayer
+local lastJumpTime = 0
+local jumpCooldown = 2
 
---// Services
-local Players = game:GetService("Players")
+local function ForceEnableJumping()
+    if not LocalPlayer or not LocalPlayer.Character or not LocalPlayer.Character:FindFirstChild("Humanoid") then
+        print("Error: Player or Humanoid not found. Please ensure the script is running after the player has loaded.")
+        return
+    end
+
+    local Humanoid = LocalPlayer.Character:FindFirstChild("Humanoid")
+
+    if not Humanoid then
+        print("Error: Humanoid not found in the player's character.")
+        return
+    end
+
+    Humanoid.JumpPower = 50
+
+ local function HandleJump()
+        if Humanoid.FloorMaterial ~= Enum.Material.Air then
+            local currentTime = os.time()
+          if currentTime - lastJumpTime >= jumpCooldown then
+            Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+            lastJumpTime = currentTime
+          end
+        end
+    end
+
+    UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
+        if input.KeyCode == Enum.KeyCode.Space and not gameProcessedEvent then
+            HandleJump()
+        end
+    end)
+
+    local function OnJumpPowerChanged()
+        if Humanoid.JumpPower == 0 then
+            Humanoid.JumpPower = 50
+            print("Jump Power reset")
+        end
+    end
+
+
+    Humanoid:GetPropertyChangedSignal("JumpPower"):Connect(OnJumpPowerChanged)
+
+    print("Jumping forced to be enabled. Press Spacebar to Jump.")
+end
+
+ForceEnableJumping()
+
 local RunService = game:GetService("RunService")
-local UIS = game:GetService("UserInputService")
 
-local player = Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-local humanoid = character:WaitForChild("Humanoid")
+RunService.Heartbeat:Connect(function()
+    if not LocalPlayer or not LocalPlayer.Character or not LocalPlayer.Character:FindFirstChild("Humanoid") then return end
+    local Humanoid = LocalPlayer.Character:FindFirstChild("Humanoid")
+    if not Humanoid then return end
 
---// Variables
-local jumpHeight = 50
-local infiniteJumpEnabled = false
-local autoJumpEnabled = false
-local minimized = false
-local MinFrame = nil
-
---// Functions
--- Infinite Jump
-UIS.JumpRequest:Connect(function()
-    if infiniteJumpEnabled then
-        humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+    if Humanoid.JumpPower == 0 then
+        Humanoid.JumpPower = 50
     end
 end)
-
--- Auto-jump (ground-only)
-RunService.RenderStepped:Connect(function()
-    if autoJumpEnabled and humanoid.FloorMaterial ~= Enum.Material.Air then
-        humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
-    end
-end)
-
--- Apply jump power constantly to all jumps
-RunService.RenderStepped:Connect(function()
-    if humanoid then
-        humanoid.JumpPower = jumpHeight
-    end
-end)
-
---// GUI
-local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.Name = "JumpGUI"
-ScreenGui.ResetOnSpawn = false
-ScreenGui.Parent = player:WaitForChild("PlayerGui")
-
--- Main Frame
-local Frame = Instance.new("Frame")
-Frame.Size = UDim2.new(0, 300, 0, 200)
-Frame.Position = UDim2.new(0.5, -150, 0.5, -100)
-Frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-Frame.Active = true
-Frame.Draggable = true
-Frame.Parent = ScreenGui
-
--- Title
-local Title = Instance.new("TextLabel")
-Title.Size = UDim2.new(1, 0, 0, 30)
-Title.BackgroundTransparency = 1
-Title.Text = "Jump Control"
-Title.TextColor3 = Color3.fromRGB(255,255,255)
-Title.Font = Enum.Font.SourceSansBold
-Title.TextSize = 20
-Title.Parent = Frame
-
--- Infinite Jump Toggle
-local IJToggle = Instance.new("TextButton")
-IJToggle.Size = UDim2.new(0, 140, 0, 40)
-IJToggle.Position = UDim2.new(0, 10, 0, 50)
-IJToggle.BackgroundColor3 = Color3.fromRGB(50,50,50)
-IJToggle.Text = "Infinite Jump: OFF"
-IJToggle.TextColor3 = Color3.fromRGB(255,255,255)
-IJToggle.Parent = Frame
-
-IJToggle.MouseButton1Click:Connect(function()
-    infiniteJumpEnabled = not infiniteJumpEnabled
-    IJToggle.Text = "Infinite Jump: " .. (infiniteJumpEnabled and "ON" or "OFF")
-end)
-
--- Auto Jump Toggle
-local AJToggle = Instance.new("TextButton")
-AJToggle.Size = UDim2.new(0, 140, 0, 40)
-AJToggle.Position = UDim2.new(0, 150, 0, 50)
-AJToggle.BackgroundColor3 = Color3.fromRGB(50,50,50)
-AJToggle.Text = "Auto Jump: OFF"
-AJToggle.TextColor3 = Color3.fromRGB(255,255,255)
-AJToggle.Parent = Frame
-
-AJToggle.MouseButton1Click:Connect(function()
-    autoJumpEnabled = not autoJumpEnabled
-    AJToggle.Text = "Auto Jump: " .. (autoJumpEnabled and "ON" or "OFF")
-end)
-
--- Jump Height Slider
-local SliderLabel = Instance.new("TextLabel")
-SliderLabel.Size = UDim2.new(0, 280, 0, 20)
-SliderLabel.Position = UDim2.new(0, 10, 0, 100)
-SliderLabel.BackgroundTransparency = 1
-SliderLabel.Text = "Jump Height: " .. jumpHeight
-SliderLabel.TextColor3 = Color3.fromRGB(255,255,255)
-SliderLabel.Font = Enum.Font.SourceSans
-SliderLabel.TextSize = 16
-SliderLabel.Parent = Frame
-
-local Slider = Instance.new("TextBox")
-Slider.Size = UDim2.new(0, 280, 0, 30)
-Slider.Position = UDim2.new(0, 10, 0, 130)
-Slider.BackgroundColor3 = Color3.fromRGB(50,50,50)
-Slider.TextColor3 = Color3.fromRGB(255,255,255)
-Slider.Text = tostring(jumpHeight)
-Slider.ClearTextOnFocus = false
-Slider.Parent = Frame
-
-Slider.FocusLost:Connect(function()
-    local val = tonumber(Slider.Text)
-    if val and val >= 50 and val <= 500 then
-        jumpHeight = val
-        SliderLabel.Text = "Jump Height: " .. jumpHeight
-    else
-        Slider.Text = tostring(jumpHeight)
-    end
-end)
-
--- Minimize/Close Buttons
-local MinimizeBtn = Instance.new("TextButton")
-MinimizeBtn.Size = UDim2.new(0, 30, 0, 30)
-MinimizeBtn.Position = UDim2.new(1, -35, 0, 5)
-MinimizeBtn.Text = "▼"
-MinimizeBtn.BackgroundColor3 = Color3.fromRGB(70,70,70)
-MinimizeBtn.TextColor3 = Color3.fromRGB(255,255,255)
-MinimizeBtn.Parent = Frame
-
-local CloseBtn = Instance.new("TextButton")
-CloseBtn.Size = UDim2.new(0, 30, 0, 30)
-CloseBtn.Position = UDim2.new(1, -70, 0, 5)
-CloseBtn.Text = "X"
-CloseBtn.BackgroundColor3 = Color3.fromRGB(70,70,70)
-CloseBtn.TextColor3 = Color3.fromRGB(255,255,255)
-CloseBtn.Parent = Frame
-
--- Minimize Function
-MinimizeBtn.MouseButton1Click:Connect(function()
-    if not minimized then
-        Frame.Visible = false
-        minimized = true
-
-        -- Create minimized frame
-        MinFrame = Instance.new("TextButton")
-        MinFrame.Size = UDim2.new(0, 50, 0, 50)
-        -- Start minimized at current frame position
-        MinFrame.Position = Frame.Position + UDim2.new(0, Frame.Size.X.Offset/2 - 25, 0, Frame.Size.Y.Offset/2 - 25)
-        MinFrame.BackgroundColor3 = Color3.fromRGB(30,30,30)
-        MinFrame.Text = "▲"
-        MinFrame.TextColor3 = Color3.fromRGB(255,255,255)
-        MinFrame.Font = Enum.Font.SourceSansBold
-        MinFrame.TextSize = 24
-        MinFrame.Active = true
-        MinFrame.Draggable = true
-        MinFrame.Parent = ScreenGui
-
-        MinFrame.MouseButton1Click:Connect(function()
-            -- Restore main GUI to minimized frame's position
-            Frame.Position = MinFrame.Position - UDim2.new(0, Frame.Size.X.Offset/2 - 25, 0, Frame.Size.Y.Offset/2 - 25)
-            MinFrame:Destroy()
-            Frame.Visible = true
-            minimized = false
-        end)
-    end
-end)
-
--- Close Button
-CloseBtn.MouseButton1Click:Connect(function()
-    ScreenGui:Destroy()
    end,
 })
 
