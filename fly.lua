@@ -202,55 +202,6 @@ c.Heartbeat:Connect(E)
 k(a(83,121,115,116,101,109,32,78,111,116,105,102,105,99,97,116,105,111,110), a(69,83,80,32,119,105,116,104,32,67,104,97,109,115,44,32,66,111,120,101,115,44,32,78,97,109,101,44,32,97,110,100,32,68,105,115,116,97,110,99,101,32,68,105,115,112,108,97,121,32,105,115,32,110,111,119,32,97,99,116,105,118,101,46,32,80,114,101,115,115,32,93,32,116,111,32,116,111,103,103,108,101,32,97,110,100,32,91,32,116,111,32,114,101,108,111,97,100,46))
    end,
 })
-local Button = MainTab:CreateButton({
-   Name = "ESP Generator",
-   Callback = function()
-			for i,v in pairs(game.Workspace:GetDescendants()) do -- grabs everything from workspace
- if v.ClassName == 'Part' and v.Parent.Name == 'Generator' then -- checks if it has a handle and if its a touchtransmitter
- local BillboardGui = Instance.new('BillboardGui') -- Makes Billboardgui
- local TextLabel = Instance.new('Generator') -- makes text label
- 
- BillboardGui.Parent = v.Parent -- what the billboardgui goes into
- BillboardGui.AlwaysOnTop = true -- if its on top or not
- BillboardGui.Size = UDim2.new(0, 50, 0, 50) -- size of it
- BillboardGui.StudsOffset = Vector3.new(0,2,0)
- 
- TextLabel.Parent = BillboardGui -- putting textlabel into billboardgui
- TextLabel.BackgroundColor3 = Color3.new(1,1,1) -- color
- TextLabel.BackgroundTransparency = 1 -- transparency
- TextLabel.Size = UDim2.new(1, 0, 1, 0) -- size
- TextLabel.Text = v.Parent.Parent.Name -- what the label says
- TextLabel.TextColor3 = Color3.new(1, 0, 0) -- color
- TextLabel.TextScaled = true -- if the text is scaled or not
- end
- end
-		end,
-	})
-local Button = MainTab:CreateButton({
-   Name = "ESP Palet",
-   Callback = function()
-			for i,v in pairs(game.Workspace:GetDescendants()) do -- grabs everything from workspace
- if v.ClassName == 'Part' and v.Parent.Name == 'Generator' then -- checks if it has a handle and if its a touchtransmitter
- local BillboardGui = Instance.new('BillboardGui') -- Makes Billboardgui
- local TextLabel = Instance.new('Generator') -- makes text label
- 
- BillboardGui.Parent = v.Parent -- what the billboardgui goes into
- BillboardGui.AlwaysOnTop = true -- if its on top or not
- BillboardGui.Size = UDim2.new(0, 50, 0, 50) -- size of it
- BillboardGui.StudsOffset = Vector3.new(0,2,0)
- 
- TextLabel.Parent = BillboardGui -- putting textlabel into billboardgui
- TextLabel.BackgroundColor3 = Color3.new(1,1,1) -- color
- TextLabel.BackgroundTransparency = 1 -- transparency
- TextLabel.Size = UDim2.new(1, 0, 1, 0) -- size
- TextLabel.Text = v.Parent.Parent.Name -- what the label says
- TextLabel.TextColor3 = Color3.new(1, 0, 0) -- color
- TextLabel.TextScaled = true -- if the text is scaled or not
- end
- end
-		end,
-	})
-
 local AdamTab = Window:CreateTab("Players", nil)
 
 local AdamSection = AdamTab:CreateSection("Speed")
