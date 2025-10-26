@@ -232,9 +232,23 @@ Rayfield:Notify({
    Duration = 6.5,
    Image = 4483362458,
 })
-local Button = Tab:CreateButton({
-   Name = "Button Example",
+local Button = AdamTab:CreateButton({
+   Name = "Enable Jump",
    Callback = function()
-loadstring(game:HttpGet("https://rawscripts.net/raw/NO-JUMPING-OBBY-Enable-jump-46721"))()
+G.Loopjump = true -- change to false to stop
+
+while _G.Loopjump do
+
+task.wait(2)
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+local Humanoid = Character:WaitForChild("Humanoid")
+
+Humanoid.JumpPower = 50 -- change your jump (recommend: 70)
+Humanoid.WalkSpeed = 16 -- change your speed (recommend: 30)
+         end
    end,
 })
