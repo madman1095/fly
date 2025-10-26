@@ -282,7 +282,7 @@ end
 
    end,
 })
-local AdamSection = AdamTab:CreateSection("Teleport")
+local AdamSection = AdamTab:CreateSection("Enable Jump")
 
 Rayfield:Notify({
    Title = "Notification Title",
@@ -291,27 +291,70 @@ Rayfield:Notify({
    Image = 4483362458,
 })
 local Button = Tab:CreateButton({
-   Name = "Generator TP",
+   Name = "Jump",
    Callback = function()
-local player = game.Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
+local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+local LocalPlayer = Players.LocalPlayer
+local lastJumpTime = 0
+local jumpCooldown = 2
 
-local items = {
-    workspace:WaitForChild("workspace.Map:GetChildren()[146]"),
-    workspace:WaitForChild("workspace.Map:GetChildren()[150]"),
-    workspace:WaitForChild("workspace.Map.Generator"),
-    workspace:WaitForChild("workspace.Map:GetChildren()[145]"),
-    workspace:WaitForChild("workspace.Map:GetChildren()[149]"),
-    workspace:WaitForChild("workspace.Map:GetChildren()[147]"),
-    workspace:WaitForChild("workspace.Map:GetChildren()[148]"),
-}
-
-local function teleportToRandomItem()
-    local randomIndex = math.random(1, #items)
-    local targetPart = items[randomIndex]
-    if targetPart and targetPart:IsA("BasePart") then
-        -- Телепортируем персонажа к центру предмета + небольшой смещение вверх
-        character:WaitForChild("HumanoidRootPart").CFrame = targetPart.CFrame + Vector3.new(0, 3, 0)
+local function ForceEnableJumping()
+    if not LocalPlayer or not LocalPlayer.Character or not LocalPlayer.Character:FindFirstChild("Humanoid") then
+        print("Error: Player or Humanoid not found. Please ensure the script is running after the player has loaded.")
+        return
     end
+
+    local Humanoid = LocalPlayer.Character:FindFirstChild("Humanoid")
+
+    if not Humanoid then
+        print("Error: Humanoid not found in the player's character.")
+        return
+    end
+
+    Humanoid.JumpPower = 50
+
+ local function HandleJump()
+        if Humanoid.FloorMaterial ~= Enum.Material.Air then
+            local currentTime = os.time()
+          if currentTime - lastJumpTime >= jumpCooldown then
+            Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+            lastJumpTime = currentTime
+          end
+        end
+    end
+
+    UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
+        if input.KeyCode == Enum.KeyCode.Space and not gameProcessedEvent then
+            HandleJump()
+        end
+    end)
+
+    local function OnJumpPowerChanged()
+        if Humanoid.JumpPower == 0 then
+            Humanoid.JumpPower = 50
+            print("Jump Power reset")
+        end
+    end
+
+
+    Humanoid:GetPropertyChangedSignal("JumpPower"):Connect(OnJumpPowerChanged)
+
+    print("Jumping forced to be enabled. Press Spacebar to Jump.")
+end
+
+ForceEnableJumping()
+
+local RunService = game:GetService("RunService")
+
+RunService.Heartbeat:Connect(function()
+    if not LocalPlayer or not LocalPlayer.Character or not LocalPlayer.Character:FindFirstChild("Humanoid") then return end
+    local Humanoid = LocalPlayer.Character:FindFirstChild("Humanoid")
+    if not Humanoid then return end
+
+    if Humanoid.JumpPower == 0 then
+        Humanoid.JumpPower = 50
+    end
+end)
 end,
 })
