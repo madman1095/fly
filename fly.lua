@@ -355,6 +355,5 @@ RunService.Heartbeat:Connect(function()
     if Humanoid.JumpPower == 0 then
         Humanoid.JumpPower = 50
     end
-end)
 end,
 })
