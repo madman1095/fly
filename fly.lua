@@ -358,4 +358,14 @@ RunService.Heartbeat:Connect(function()
 end)
    end,
 })
-
+local Button = AdamTab:CreateButton({
+   Name = "infinity Jump",
+   Callback = function()
+	local InfiniteJumpEnabled = true
+game:GetService("UserInputService").JumpRequest:connect(function()
+ if InfiniteJumpEnabled then
+ game:GetService"Players".LocalPlayer.Character:FindFirstChildOfClass'Humanoid':ChangeState("Jumping")
+ end
+end)
+		end,
+	})
