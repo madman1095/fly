@@ -282,3 +282,36 @@ end
 
    end,
 })
+local AdamSection = AdamTab:CreateSection("Teleport")
+
+Rayfield:Notify({
+   Title = "Notification Title",
+   Content = "Notification Content",
+   Duration = 6.5,
+   Image = 4483362458,
+})
+local Button = Tab:CreateButton({
+   Name = "Generator TP",
+   Callback = function()
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+
+local items = {
+    workspace:WaitForChild("workspace.Map:GetChildren()[146]"),
+    workspace:WaitForChild("workspace.Map:GetChildren()[150]"),
+    workspace:WaitForChild("workspace.Map.Generator"),
+    workspace:WaitForChild("workspace.Map:GetChildren()[145]"),
+    workspace:WaitForChild("workspace.Map:GetChildren()[149]"),
+    workspace:WaitForChild("workspace.Map:GetChildren()[147]"),
+    workspace:WaitForChild("workspace.Map:GetChildren()[148]"),
+}
+
+local function teleportToRandomItem()
+    local randomIndex = math.random(1, #items)
+    local targetPart = items[randomIndex]
+    if targetPart and targetPart:IsA("BasePart") then
+        -- Телепортируем персонажа к центру предмета + небольшой смещение вверх
+        character:WaitForChild("HumanoidRootPart").CFrame = targetPart.CFrame + Vector3.new(0, 3, 0)
+    end
+end,
+})
