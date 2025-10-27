@@ -381,8 +381,6 @@ local Button = Tab:CreateButton({
    Name = "Teleport player",
    Callback = function()
     
-
--- Function to teleport to a random player
 local function teleportToRandomPlayer()
     local players = game.Players:GetPlayers()
     if #players > 1 then  -- Check if there's another player
@@ -391,7 +389,6 @@ local function teleportToRandomPlayer()
             randomPlayer = players[math.random(1, #players)]
         until randomPlayer ~= player and randomPlayer.Character and randomPlayer.Character:FindFirstChild("HumanoidRootPart")
 
-        -- Teleport to random player's position
         if randomPlayer then
             local character = player.Character
             local targetRoot = randomPlayer.Character:FindFirstChild("HumanoidRootPart")
@@ -403,7 +400,8 @@ local function teleportToRandomPlayer()
             end
         end
     end
-			end)
+				end
+				
   end,
 })
         
