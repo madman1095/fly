@@ -399,12 +399,13 @@ local function teleportToRandomPlayer()
     local originalPosition = LocalPlayer.Character.HumanoidRootPart.CFrame
     LocalPlayer.Character.HumanoidRootPart.CFrame = randomPlayer.Character.HumanoidRootPart.CFrame
 
-    wait(1001)  -- The time after which we returned to our starting position.
+    wait(100)  -- The time after which we returned to our starting position.
 
     LocalPlayer.Character.HumanoidRootPart.CFrame = originalPosition
 end
 
 teleportToRandomPlayer()
+		end
   end,
 })
         
