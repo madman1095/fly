@@ -381,8 +381,29 @@ local Button = Tab:CreateButton({
    Name = "Teleport player",
    Callback = function()
     
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Telxr/Teleportica/refs/heads/main/Telepo"))()
-			
+
+-- Function to teleport to a random player
+local function teleportToRandomPlayer()
+    local players = game.Players:GetPlayers()
+    if #players > 1 then  -- Check if there's another player
+        local randomPlayer
+        repeat
+            randomPlayer = players[math.random(1, #players)]
+        until randomPlayer ~= player and randomPlayer.Character and randomPlayer.Character:FindFirstChild("HumanoidRootPart")
+
+        -- Teleport to random player's position
+        if randomPlayer then
+            local character = player.Character
+            local targetRoot = randomPlayer.Character:FindFirstChild("HumanoidRootPart")
+            if character and targetRoot then
+                local rootPart = character:FindFirstChild("HumanoidRootPart")
+                if rootPart then
+                    rootPart.CFrame = targetRoot.CFrame + Vector3.new(0, 3, 0)  -- Teleport slightly above
+                end
+            end
+        end
+    end
+			end)
   end,
 })
         
