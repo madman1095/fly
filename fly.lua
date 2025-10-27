@@ -377,8 +377,8 @@ Rayfield:Notify({
    Duration = 6.5,
    Image = 4483362458,
 })
-local Button = Tab:CreateButton({
-   Name = "Button Example",
+local Button = TeleportTab:CreateButton({
+   Name = "Random Players",
    Callback = function()
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
