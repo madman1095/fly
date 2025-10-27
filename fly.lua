@@ -377,7 +377,7 @@ Rayfield:Notify({
    Duration = 6.5,
    Image = 4483362458,
 })
-local Button = Tab:CreateButton({
+local Button = TeleportTab:CreateButton({
    Name = "Teleport player",
    Callback = function()
 local Players = game:GetService("Players")
@@ -405,7 +405,7 @@ local function teleportToRandomPlayer()
 end
 
 teleportToRandomPlayer()
-		end
+		
   end,
 })
         
