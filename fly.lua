@@ -406,6 +406,6 @@ local function teleportToRandomPlayer()
 end
 
 teleportToRandomPlayer()		
-		end
+		
    end,
 })
