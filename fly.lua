@@ -380,53 +380,54 @@ Rayfield:Notify({
 local Button = Tab:CreateButton({
    Name = "Teleport player",
    Callback = function()
-local player = game.Players.LocalPlayer
-local screenGui = Instance.new("ScreenGui")
-screenGui.Parent = player:WaitForChild("PlayerGui")
+local function createTeleportGUI()
+    local player = game.Players.LocalPlayer
+    local screenGui = Instance.new("ScreenGui")
+    screenGui.Parent = player:WaitForChild("PlayerGui")
 
--- Create draggable frame (base)
-local frame = Instance.new("Frame")
-frame.Size = UDim2.new(0, 150, 0, 50)
-frame.Position = UDim2.new(0.4, 0, 0.1, 0)
-frame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-frame.Active = true
-frame.Draggable = true
-frame.Parent = screenGui
+    -- Создаем фрейм (блок)
+    local frame = Instance.new("Frame")
+    frame.Size = UDim2.new(0, 150, 0, 50)
+    frame.Position = UDim2.new(0.4, 0, 0.1, 0)
+    frame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+    frame.Active = true
+    frame.Draggable = true
+    frame.Parent = screenGui
 
--- Create "TP to Random" button
-local tpButton = Instance.new("TextButton")
-tpButton.Size = UDim2.new(0.8, 0, 0.6, 0)  -- Keep button smaller than frame
-tpButton.Position = UDim2.new(0.1, 0, 0.2, 0)  -- Center inside frame
-tpButton.BackgroundColor3 = Color3.fromRGB(255, 100, 100)
-tpButton.Text = "TP to Random"
-tpButton.TextScaled = true
-tpButton.Parent = frame
+    -- Создаем кнопку "TP to Random"
+    local tpButton = Instance.new("TextButton")
+    tpButton.Size = UDim2.new(0.8, 0, 0.6, 0)
+    tpButton.Position = UDim2.new(0.1, 0, 0.2, 0)
+    tpButton.BackgroundColor3 = Color3.fromRGB(255, 100, 100)
+    tpButton.Text = "TP to Random"
+    tpButton.TextScaled = true
+    tpButton.Parent = frame
 
--- Function to teleport to a random player
-local function teleportToRandomPlayer()
-    local players = game.Players:GetPlayers()
-    if #players > 1 then  -- Check if there's another player
-        local randomPlayer
-        repeat
-            randomPlayer = players[math.random(1, #players)]
-        until randomPlayer ~= player and randomPlayer.Character and randomPlayer.Character:FindFirstChild("HumanoidRootPart")
+    -- Функция телепортации
+    local function teleportToRandomPlayer()
+        local players = game.Players:GetPlayers()
+        if #players > 1 then
+            local randomPlayer
+            repeat
+                randomPlayer = players[math.random(1, #players)]
+            until randomPlayer ~= player and randomPlayer.Character and randomPlayer.Character:FindFirstChild("HumanoidRootPart")
 
-        -- Teleport to random player's position
-        if randomPlayer then
-            local character = player.Character
-            local targetRoot = randomPlayer.Character:FindFirstChild("HumanoidRootPart")
-            if character and targetRoot then
-                local rootPart = character:FindFirstChild("HumanoidRootPart")
-                if rootPart then
-                    rootPart.CFrame = targetRoot.CFrame + Vector3.new(0, 3, 0)  -- Teleport slightly above
+            if randomPlayer then
+                local character = player.Character
+                local targetRoot = randomPlayer.Character:FindFirstChild("HumanoidRootPart")
+                if character and targetRoot then
+                    local rootPart = character:FindFirstChild("HumanoidRootPart")
+                    if rootPart then
+                        rootPart.CFrame = targetRoot.CFrame + Vector3.new(0, 3, 0)
+                    end
                 end
             end
         end
     end
-end
 
--- Connect button to teleport function
-tpButton.MouseButton1Click:Connect(teleportToRandomPlayer)
+    -- Связываем клик по кнопке с функцией
+    tpButton.MouseButton1Click:Connect(teleportToRandomPlayer)
+			end
 				
   end,
 })
