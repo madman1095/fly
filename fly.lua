@@ -380,19 +380,31 @@ Rayfield:Notify({
 local Button = Tab:CreateButton({
    Name = "Teleport player",
    Callback = function()
-	local HttpService = game:GetService("HttpService")
-local url = "https://rawscripts.net/raw/Universal-Script-Teleport-to-a-random-person-gui-33665" -- замените на ссылку
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local TeleportService = game:GetService("TeleportService")
 
-local success, response = pcall(function()
-    return HttpService:GetAsync(url)
-end)
+local function teleportToRandomPlayer()
+    local players = Players:GetPlayers()
+    if #players < 2 then
+        warn("Not enough players to teleport")
+        return
+    end
 
-if success then
-    print("Получено содержимое:", response)
-    -- Можно обработать response, например, разделить команды или парсить
-else
-    warn("Ошибка при загрузке данных:", response)
-			end
+    local randomPlayer
+    repeat
+        randomPlayer = players[math.random(1, #players)]
+    until randomPlayer ~= LocalPlayer
+
+    local originalPosition = LocalPlayer.Character.HumanoidRootPart.CFrame
+    LocalPlayer.Character.HumanoidRootPart.CFrame = randomPlayer.Character.HumanoidRootPart.CFrame
+
+    wait(1001)  -- The time after which we returned to our starting position.
+
+    LocalPlayer.Character.HumanoidRootPart.CFrame = originalPosition
+end
+
+teleportToRandomPlayer()
   end,
 })
         
