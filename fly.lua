@@ -657,7 +657,7 @@ Modules.print("Red", "Si vous rencontrez des problèmes avec mon script aller m'
 Modules.print("Red","-------------------------------------------------------------------------------------",20)
 Modules.print("Red", "If you have any problems with my script, please write to me privately on Discord: maxproglitcher",20)
 ---------------------------------------------------------------------------------------------------------------------------------
-		end
+
   end,
 })
         
