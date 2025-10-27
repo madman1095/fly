@@ -377,8 +377,8 @@ Rayfield:Notify({
    Duration = 6.5,
    Image = 4483362458,
 })
-local Button = TeleportTab:CreateButton({
-   Name = "Teleport player",
+local Button = Tab:CreateButton({
+   Name = "Button Example",
    Callback = function()
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
@@ -399,13 +399,12 @@ local function teleportToRandomPlayer()
     local originalPosition = LocalPlayer.Character.HumanoidRootPart.CFrame
     LocalPlayer.Character.HumanoidRootPart.CFrame = randomPlayer.Character.HumanoidRootPart.CFrame
 
-    wait(100)  -- The time after which we returned to our starting position.
+    wait(1000)  -- The time after which we returned to our starting position.
 
     LocalPlayer.Character.HumanoidRootPart.CFrame = originalPosition
 end
 
 teleportToRandomPlayer()
-		
-  end,
+		end)
+   end,
 })
-        
