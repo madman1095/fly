@@ -658,7 +658,6 @@ Modules.print("Red","-----------------------------------------------------------
 Modules.print("Red", "If you have any problems with my script, please write to me privately on Discord: maxproglitcher",20)
 ---------------------------------------------------------------------------------------------------------------------------------
 		end
-	end)
   end,
 })
         
