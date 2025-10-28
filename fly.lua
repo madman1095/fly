@@ -223,7 +223,6 @@ local Button = MainTab:CreateButton({
         TextLabel.TextColor3 = Color3.new(255, 0, 0) -- color
         TextLabel.TextScaled = true -- if the text is scaled or not
     end
-    end 
    end,
 })
 local Button = MainTab:CreateButton({
@@ -247,7 +246,6 @@ local Button = MainTab:CreateButton({
         TextLabel.TextColor3 = Color3.new(255, 255, 0) -- color
         TextLabel.TextScaled = true -- if the text is scaled or not
     end
-    end 
    end,
 })
 local AdamTab = Window:CreateTab("Players", nil)
