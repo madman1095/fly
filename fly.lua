@@ -202,6 +202,18 @@ c.Heartbeat:Connect(E)
 k(a(83,121,115,116,101,109,32,78,111,116,105,102,105,99,97,116,105,111,110), a(69,83,80,32,119,105,116,104,32,67,104,97,109,115,44,32,66,111,120,101,115,44,32,78,97,109,101,44,32,97,110,100,32,68,105,115,116,97,110,99,101,32,68,105,115,112,108,97,121,32,105,115,32,110,111,119,32,97,99,116,105,118,101,46,32,80,114,101,115,115,32,93,32,116,111,32,116,111,103,103,108,101,32,97,110,100,32,91,32,116,111,32,114,101,108,111,97,100,46))
    end,
 })
+local Button = MainTab:CreateButton({
+   Name = "ESP Generator",
+   Callback = function()
+   -- The function that takes place when the button is pressed
+   end,
+})
+local Button = MainTab:CreateButton({
+   Name = "ESP Pallet",
+   Callback = function()
+   -- The function that takes place when the button is pressed
+   end,
+})
 local AdamTab = Window:CreateTab("Players", nil)
 
 local AdamSection = AdamTab:CreateSection("Speed")
