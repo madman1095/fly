@@ -205,13 +205,49 @@ k(a(83,121,115,116,101,109,32,78,111,116,105,102,105,99,97,116,105,111,110), a(6
 local Button = MainTab:CreateButton({
    Name = "ESP Generator",
    Callback = function()
-   -- The function that takes place when the button is pressed
+   -for i,v in pairs(game.Workspace:GetDescendants()) do -- grabs everything from workspace
+    if v.ClassName == 'MeshPart' and v.Parent.Name == 'Generator' then -- checks if it has a handle and if its a touchtransmitter
+        local BillboardGui = Instance.new('BillboardGui') -- Makes Billboardgui
+        local TextLabel = Instance.new('TextLabel') -- makes text label
+        
+        BillboardGui.Parent = v.Parent -- what the billboardgui goes into
+        BillboardGui.AlwaysOnTop = true -- if its on top or not
+        BillboardGui.Size = UDim2.new(0, 60, 0, 60) -- size of it
+        BillboardGui.StudsOffset = Vector3.new(0,2,0)
+        
+        TextLabel.Parent = BillboardGui -- putting textlabel into billboardgui
+        TextLabel.BackgroundColor3 = Color3.new(1,250,1) -- color
+        TextLabel.BackgroundTransparency = 1 -- transparency
+        TextLabel.Size = UDim2.new(1, 0, 1, 0) -- size
+        TextLabel.Text = v.Parent.Name -- what the label says
+        TextLabel.TextColor3 = Color3.new(255, 0, 0) -- color
+        TextLabel.TextScaled = true -- if the text is scaled or not
+    end
+    end 
    end,
 })
 local Button = MainTab:CreateButton({
    Name = "ESP Pallet",
    Callback = function()
-   -- The function that takes place when the button is pressed
+   for i,v in pairs(game.Workspace:GetDescendants()) do -- grabs everything from workspace
+    if v.ClassName == 'Part' and v.Parent.Name == 'Palletwrong' then -- checks if it has a handle and if its a touchtransmitter
+        local BillboardGui = Instance.new('BillboardGui') -- Makes Billboardgui
+        local TextLabel = Instance.new('TextLabel') -- makes text label
+        
+        BillboardGui.Parent = v.Parent -- what the billboardgui goes into
+        BillboardGui.AlwaysOnTop = true -- if its on top or not
+        BillboardGui.Size = UDim2.new(0, 50, 0, 50) -- size of it
+        BillboardGui.StudsOffset = Vector3.new(0,2,0)
+        
+        TextLabel.Parent = BillboardGui -- putting textlabel into billboardgui
+        TextLabel.BackgroundColor3 = Color3.new(1,250,1) -- color
+        TextLabel.BackgroundTransparency = 1 -- transparency
+        TextLabel.Size = UDim2.new(1, 0, 1, 0) -- size
+        TextLabel.Text = v.Parent.Name -- what the label says
+        TextLabel.TextColor3 = Color3.new(255, 255, 0) -- color
+        TextLabel.TextScaled = true -- if the text is scaled or not
+    end
+    end 
    end,
 })
 local AdamTab = Window:CreateTab("Players", nil)
